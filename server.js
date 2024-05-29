@@ -24,6 +24,7 @@ db.serialize(() => {
     db.run(`CREATE TABLE IF NOT EXISTS messages (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT NOT NULL,
+        location TEXT NOT NULL,
         message TEXT NOT NULL,
         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
@@ -69,10 +70,10 @@ app.post('/register', (req, res) => {
 
 // Route for handling chat messages
 app.post('/chat', (req, res) => {
-    const { username, message } = req.body;
+    const { username, location, message } = req.body;
 
-    db.run(`INSERT INTO messages (username, message) VALUES (?, ?)`,
-        [username, message],
+    db.run(`INSERT INTO messages (username, location,  message) VALUES (?, ?, ?)`,
+        [username, location, message],
         (err) => {
             if (err) {
                 console.error(err.message);
