@@ -29,6 +29,17 @@ db.serialize(() => {
         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
 });
+app.get('/users', (req, res) => {
+    db.all(`SELECT * FROM users`, (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send('Error retrieving users');
+        } else {
+            res.status(200).json(rows);
+            console.log(rows);
+        }
+    });
+});
 
 // User authentication route
 app.post('/login', (req, res) => {
@@ -81,6 +92,7 @@ app.post('/chat', (req, res) => {
                 res.status(500).send('Error sending message');
             } else {
                 res.status(200).send('Message sent successfully');
+                console.log(message);
             }
         }
     );
@@ -94,6 +106,7 @@ app.get('/messages', (req, res) => {
             res.status(500).send('Error retrieving messages');
         } else {
             res.status(200).json(rows);
+            console.log(rows);
         }
     });
 });
