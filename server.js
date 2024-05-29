@@ -51,9 +51,10 @@ app.post('/login', (req, res) => {
 });
 
 // Route for storing user data
-app.post('/register', (req, res) => {
-    const { username, email, password } = req.body;
+app.post("/register", (req, res) => {
+    const {username, email, password} = req.body;
     const hashedPassword = crypto.SHA256(password).toString();
+    console.log(username);
 
     db.run(`INSERT INTO users (username, email, password) VALUES (?, ?, ?)`,
         [username, email, hashedPassword],
