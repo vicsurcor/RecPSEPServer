@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Client</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <script>
+        const socket = io('http://localhost:3000');
+
+        socket.on('connect', () => {
+            console.log('Connected to server');
+            // Send a sample message to the server
+            socket.emit('chat message', { username: 'TestUser', location: 'TestLocation', message: 'Hello from client' });
+        });
+
+        socket.on('chat message', (msg) => {
+            console.log('Received message from server:', msg);
+        });
+
+        socket.on('disconnect', () => {
+            console.log('Disconnected from server');
+        });
+    </script>
+</head>
+<body>
+    <h1>WebSocket Client</h1>
+    <p>Check console for messages.</p>
+</body>
+</html>
